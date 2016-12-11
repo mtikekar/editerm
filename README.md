@@ -38,6 +38,7 @@ neovim:
 
 fish needs `libncurses5-dev` for compiling and `doxygen` for documentation (man pages).
 st and tabbed need `libx11-dev` and `libxft-dev`.
+xsel needs `libxt-dev`.
 
 All these build requirements can be uninstalled after building. The run-time dependencies for all of
 these came pre-installed on an Ubuntu 16.04 system.
@@ -52,6 +53,8 @@ To uninstall:
 - `pip uninstall neovim`
 - `rm ~/.terminfo/s/st{,-meta}{,-256color}`
 - `rmdir -p ~/.terminfo/s`
+
+man only supports `man <page>` or `man <number> <page>`. vim only supports whatever `vim -h` says.
 
 I encountered an issue with fish 2.4. If vi binding is enabled, it outputs strange codes
 that break vim's :Man. Sticking to 2.3.1 for now.

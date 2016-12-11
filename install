@@ -39,7 +39,6 @@ cd ..
 # tabbed
 git clone git://git.suckless.org/tabbed
 cd tabbed
-git checkout 0.6
 git apply ../patches/tabbed.patch
 make PREFIX="$prefix" install
 cd ..
