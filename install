@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# change prefix to suit your needs
+# root permissions are not needed
+# use absolute path
+prefix=$HOME/editerm
+
+# stop on any error
+set -e
+
+# fish
+git clone https://github.com/fish-shell/fish-shell
+cd fish-shell
+git checkout 2.3.1
+autoconf
+./configure --prefix="$prefix"
+make -j 4 install
+cd ..
+
+# neovim
+git clone https://github.com/neovim/neovim
+cd neovim
+git checkout v0.1.5
+git apply ../patches/neovim.patch
+make NVIM_PREFIX="$prefix" -j 4 install
+cd ..
+
+# neovim python client
+pip install neovim==0.1.9
+
+# st
+git clone git://git.suckless.org/st
+cd st
+git checkout 0.7
+git apply ../patches/st.patch
+make PREFIX="$prefix" install
+cd ..
+
+# tabbed
+git clone git://git.suckless.org/tabbed
+cd tabbed
+git checkout 0.6
+git apply ../patches/tabbed.patch
+make PREFIX="$prefix" install
+cd ..
+
+# abduco
+wget http://www.brain-dump.org/projects/abduco/abduco-0.6.tar.gz
+tar xf abduco-0.6.tar.gz
+cd abduco-0.6
+make PREFIX="$prefix" install
+cd ..
+
+# xsel
+wget http://www.vergenet.net/~conrad/software/xsel/download/xsel-1.2.0.tar.gz
+tar xf xsel-1.2.0.tar.gz
+cd xsel-1.2.0
+./configure prefix="$prefix"
+make install
+cd ..
+
+# install scripts
+cp editerm gvim vim man "$prefix/bin/"
+
+echo "Add $prefix/bin to your path"

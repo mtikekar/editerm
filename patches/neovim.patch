@@ -1,10 +1,11 @@
 diff --git a/local.mk b/local.mk
 new file mode 100644
-index 0000000..7dd35dc
+index 0000000..3eabe2c
 --- /dev/null
 +++ b/local.mk
-@@ -0,0 +1,2 @@
-+CMAKE_EXTRA_FLAGS := -DCMAKE_INSTALL_PREFIX=${HOME}/editerm
+@@ -0,0 +1,3 @@
++NVIM_PREFIX ?= /usr/local
++CMAKE_EXTRA_FLAGS := -DCMAKE_INSTALL_PREFIX=${NVIM_PREFIX}
 +CMAKE_BUILD_TYPE := Release
 diff --git a/runtime/autoload/man.vim b/runtime/autoload/man.vim
 index 6c2d4ea..28e88f6 100644
