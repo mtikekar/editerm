@@ -1,0 +1,9 @@
+#!/bin/bash
+unset NVIM_LISTEN_ADDRESS
+
+if [ "$DISPLAY" ]; then
+    exec &> /dev/null
+    exec tabbed -d -r 2 st -w winid -e nvim -c terminal "$@" &
+else
+    exec abduco -fA editerm nvim -c terminal "$@"
+fi

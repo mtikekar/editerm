@@ -1,0 +1,24 @@
+diff --git a/local.mk b/local.mk
+new file mode 100644
+index 0000000..7dd35dc
+--- /dev/null
++++ b/local.mk
+@@ -0,0 +1,2 @@
++CMAKE_EXTRA_FLAGS := -DCMAKE_INSTALL_PREFIX=${HOME}/editerm
++CMAKE_BUILD_TYPE := Release
+diff --git a/runtime/autoload/man.vim b/runtime/autoload/man.vim
+index 6c2d4ea..28e88f6 100644
+--- a/runtime/autoload/man.vim
++++ b/runtime/autoload/man.vim
+@@ -4,9 +4,9 @@
+ " by forcing man to use cat as the pager.
+ " More info here http://comments.gmane.org/gmane.editors.vim.devel/29085
+ if &shell =~# 'fish$'
+-  let s:man_cmd = 'man -P cat ^/dev/null'
++  let s:man_cmd = '/usr/bin/man -P cat ^/dev/null'
+ else
+-  let s:man_cmd = 'man -P cat 2>/dev/null'
++  let s:man_cmd = '/usr/bin/man -P cat 2>/dev/null'
+ endif
+ 
+ let s:man_find_arg = "-w"

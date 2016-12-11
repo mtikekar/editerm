@@ -1,0 +1,4 @@
+#!/bin/bash
+unset NVIM_LISTEN_ADDRESS
+exec &> /dev/null
+exec st -e nvim "$@" &
