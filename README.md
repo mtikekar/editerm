@@ -1,16 +1,16 @@
 # Shortcuts
 
 tabbed:
-  C-S-t: open new tab with: env -u NVIM_LISTEN_ADDRESS st
-  C-q: close tab
-  C-<Tab>: go to last tab
-  Mouse: go to tab
-  S-<left>/<right>: move tab
-  F11: fullscreen
+- `Ctrl-Shift-t`: open new tab with st
+- `Ctrl-q`: close tab
+- `Ctrl-<Tab>`: go to last tab
+- Mouse: go to tab
+- `Shift-<left>/<right>`: move tab
+- `F11`: fullscreen
 
 neovim:
-  C-h,j,k,l: move b/w windows and tabs
-  Mouse: go to tab
+- `Ctrl-h,j,k,l`: move b/w windows and tabs
+- Mouse: go to tab
 
 # Scripts
 
@@ -34,7 +34,7 @@ man: same as vim
 - abduco: http://www.brain-dump.org/projects/abduco/abduco-0.6.tar.gz (binary in ubuntu repo too old)
 - xsel: http://www.vergenet.net/~conrad/software/xsel/download/xsel-1.2.0.tar.gz (or get binary)
 
-- I encountered an issue with fish 2.4. If vi binding is enabled, it outputs strange escape sequences
+I encountered an issue with fish 2.4. If vi binding is enabled, it outputs strange escape sequences
 that break vim's :Man.
 
 # Build instructions
@@ -42,17 +42,16 @@ that break vim's :Man.
 Apply patches with `git apply <patch-file>`
 
 - fish: Install libncurses5-dev to build code and doxygen to build man pages. Then:
-    autoconf; ./configure --prefix=<prefix>; make -j 4 install
+    `autoconf; ./configure --prefix=<prefix>; make -j 4 install`
 - neovim: Edit prefix setting in local.mk
-    make -j 4 install
-    pip install neovim==0.1.9
+    `make -j 4 install; pip install neovim==0.1.9`
 - st: You need libx11-dev and libxft-dev to build
-    make PREFIX=<prefix> install
+    `make PREFIX=<prefix> install`
 - tabbed: You need libx11-dev and libxft-dev to build
-    make PREFIX=<prefix> install
+    `make PREFIX=<prefix> install`
 - abduco:
-    make PREFIX=<prefix> install
+    `make PREFIX=<prefix> install`
 - xsel:
-    ./configure --prefix=<prefix>; make install
+    `./configure --prefix=<prefix>; make install`
 
 Copy/symlink editerm, gvim, vim, man scripts.
