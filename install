@@ -59,6 +59,6 @@ make install
 cd ..
 
 # install scripts
-cp editerm gvim vim man "$prefix/bin/"
+cp bin/* "$prefix/bin/"
 
 echo "Add $prefix/bin to your path"
