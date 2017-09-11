@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 """Edit a file in the host nvim instance."""
 # Setup: put this file on your $PATH with name vim
 from __future__ import print_function
