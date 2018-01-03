@@ -1,0 +1,5 @@
+#!/bin/bash
+unset NVIM_LISTEN_ADDRESS
+
+exec &> /dev/null
+exec tabbed -d -r 2 st -w winid -e nvim -c terminal "$@" &
