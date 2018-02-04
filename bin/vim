@@ -35,7 +35,7 @@ while (($#)); do
         -O) mode=vsplit ;;
         -p) mode=-tabedit ;;
         -d) mode=diff ;;
-        --) shift; files+=("$@") ;;
+        --) shift; files+=("$@"); break ;;
         * ) files+=("$1")
     esac
     shift
