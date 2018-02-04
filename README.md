@@ -14,7 +14,6 @@ man: If called from a neovim terminal, open man page with neovim's :Man. Else, c
 
 - fish: https://github.com/fish-shell/fish-shell
 - neovim: https://github.com/neovim/neovim
-- neovim python client: https://github.com/neovim/python-client
 - st: git://git.suckless.org/st
 - tabbed: git://git.suckless.org/tabbed
 - abduco: http://www.brain-dump.org/projects/abduco
@@ -50,7 +49,6 @@ See the [install script](install) for how to install.
 To uninstall:
 - delete the prefix directory
 - `rm -r ~/{.config,.local/share}/{nvim,fish}`
-- `pip uninstall neovim`
 - `rm ~/.terminfo/s/st{,-meta}{,-256color}`
 - `rmdir -p ~/.terminfo/s`
 

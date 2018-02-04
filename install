@@ -25,9 +25,6 @@ git apply ../patches/neovim.patch
 make NVIM_PREFIX="$prefix" -j 4 install
 cd ..
 
-# neovim python client
-pip install neovim==0.1.9
-
 # st
 git clone git://git.suckless.org/st
 cd st

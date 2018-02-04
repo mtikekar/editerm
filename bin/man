@@ -1,20 +1,10 @@
-#!/usr/bin/python
-"""Open a manpage in the host nvim instance."""
-# Setup: put this file on your $PATH with name man
-from __future__ import print_function
-import os
-import sys
+#!/bin/bash
+if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+    vimf=$(dirname "$(readlink -f "$0")")/../vim/remote_funcs.vim
 
-addr = os.environ.get("NVIM_LISTEN_ADDRESS", None)
-
-if not addr:
-    sys.argv[0] = '/usr/bin/man'
-    os.execvp(sys.argv[0], sys.argv)
-
-from neovim import attach
-nvim = attach("socket", path=addr)
-
-if 'MANPATH' in os.environ:
-    nvim.command("let $MANPATH = '{}'".format(os.environ['MANPATH']))
-
-nvim.command('Man ' + ' '.join(sys.argv[1:]))
+    env -u NVIM_LISTEN_ADDRESS nvim --headless -u NONE \
+    -c "source $vimf" -c "RemoteStart $NVIM_LISTEN_ADDRESS" \
+    -c "RemoteMan $@" -c "quit"
+else
+    /usr/bin/man "$@"
+fi

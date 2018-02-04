@@ -1,40 +1,59 @@
-#!/usr/bin/python
-"""Edit a file in the host nvim instance."""
-# Setup: put this file on your $PATH with name vim
-from __future__ import print_function
-import os
-import sys
+#!/bin/bash
 
-addr = os.environ.get("NVIM_LISTEN_ADDRESS", None)
-if not addr:
-    sys.argv[0] = 'nvim'
-    os.execvp('nvim', sys.argv)
+help-and-exit() {
+cat >&2 <<EOF
+usage: vim [-h | --help] [-o | -O | -p | -d] files...
 
-from neovim import attach
-import argparse
+-o  Horizontal split
+-O  Vertical split
+-p  Separate tabs
+-d  Diff mode
+EOF
+exit "$1"
+}
 
-parser = argparse.ArgumentParser(description=__doc__, conflict_handler='resolve')
-parser.add_argument('files', nargs='+', help='one or more files to edit')
-group = parser.add_mutually_exclusive_group()
-group.add_argument('-o', dest='mode', action='store_const', const='split', help='open in horizontally split windows') 
-group.add_argument('-O', dest='mode', action='store_const', const='vsplit', help='open in vertically split windows')
-group.add_argument('-p', dest='mode', action='store_const', const='-tabedit', help='open in separate tabs')
-group.add_argument('-d', dest='mode', action='store_const', const='vert diffsplit', help='open in diff mode')
-args = parser.parse_args()
-if not args.mode:
-    args.mode = 'edit'
+check-opt() {
+case "$1" in
+    -[oOpd] ) [ -z "$mode" ] || { echo "extra option: $1" >&2; help-and-exit 1; } ;;
+    *) echo "unrecognized option: $1" >&2; help-and-exit 1 ;;
+esac
+}
 
-def escape(s):
-    return s.replace(' ', r'\ ')
+remote-vim() {
+files=()
+mode=""
 
-nvim = attach("socket", path=addr)
-nvim.input('<c-\\><c-n>')  # exit terminal mode
-# first one is opened in new tab
-nvim.command('cd ' + escape(os.getcwd()))
+while (($#)); do
+    case "$1" in
+        --) ;;
+        -h|--help) help-and-exit 0 ;;
+        -?|--*) check-opt "$1" ;;
+    esac
 
-if len(args.files) > 1 or args.mode == 'edit':
-    nvim.command('-tabedit ' + escape(args.files[0]))
-    del args.files[0]
+    case "$1" in
+        -o) mode=split ;;
+        -O) mode=vsplit ;;
+        -p) mode=-tabedit ;;
+        -d) mode=diff ;;
+        --) shift; files+=("$@") ;;
+        * ) files+=("$1")
+    esac
+    shift
+done
 
-for f in args.files:
-    nvim.command(args.mode + ' ' + escape(f))
+[ -z "$mode" ] && mode=edit
+
+a=$(printf '%q ' "${files[@]}")
+
+vimf=$(dirname "$(readlink -f "$0")")/../vim/remote_funcs.vim
+
+env -u NVIM_LISTEN_ADDRESS nvim --headless -u NONE \
+    -c "source $vimf" -c "RemoteStart $NVIM_LISTEN_ADDRESS" \
+    -c "RemoteVim $mode $a" -c "quit"
+}
+
+if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+    remote-vim "$@"
+else
+    nvim "$@"
+fi
