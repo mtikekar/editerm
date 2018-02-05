@@ -19,7 +19,6 @@ function! s:RemoteVim(mode, ...)
     let escape_chars = ' \'
     let files = map(copy(a:000), 'escape(v:val, escape_chars)')
 
-    call writefile([mode] + files, "files.log", "a")
     call rpcrequest(s:conn, 'nvim_set_current_dir', getcwd())
 
     " Preserve the terminal tab if it would've been taken over
