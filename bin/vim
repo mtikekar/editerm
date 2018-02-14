@@ -47,7 +47,7 @@ a=$(printf '%q ' "${files[@]}")
 
 vimf=$(dirname "$(readlink -f "$0")")/../vim/remote_funcs.vim
 
-env -u NVIM_LISTEN_ADDRESS nvim --headless -u NONE \
+env -u NVIM_LISTEN_ADDRESS nvim --headless -u NONE -i NONE \
     -c "source $vimf" -c "RemoteStart $NVIM_LISTEN_ADDRESS" \
     -c "RemoteVim $mode $a" -c "quit"
 }
