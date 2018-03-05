@@ -1,5 +1,7 @@
 #!/bin/bash
 unset NVIM_LISTEN_ADDRESS
+d="$(readlink -e "$0")"
+d="$(dirname "$d")"
 
 exec &> /dev/null
-exec tabbed -d -r 2 st -w winid -e nvim -c terminal "$@" &
+exec $d/tabbed -d -r 2 $d/st -w winid -e nvim -c terminal "$@" &

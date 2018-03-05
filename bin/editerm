@@ -1,4 +1,6 @@
 #!/bin/bash
 unset NVIM_LISTEN_ADDRESS
+d="$(readlink -e "$0")"
+d="$(dirname "$d")"
 
-exec abduco -fA editerm nvim -c terminal "$@"
+exec $d/abduco -fA editerm nvim -c terminal "$@"
