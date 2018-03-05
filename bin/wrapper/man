@@ -1,10 +1,8 @@
 #!/bin/bash
-if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
-    vimf=$(dirname "$(readlink -f "$0")")/remote_funcs.vim
+[ -z "$NVIM_LISTEN_ADDRESS" ] && exec /usr/bin/man "$@"
 
-    env -u NVIM_LISTEN_ADDRESS nvim --headless -u NONE -i NONE \
+vimf=$(dirname "$(readlink -f "$0")")/remote_funcs.vim
+
+env -u NVIM_LISTEN_ADDRESS nvim --headless -u NONE -i NONE \
     -c "source $vimf" -c "RemoteStart $NVIM_LISTEN_ADDRESS" \
     -c "RemoteMan $@" -c "quit"
-else
-    /usr/bin/man "$@"
-fi

@@ -1,4 +1,5 @@
 #!/bin/bash
+[ -z "$NVIM_LISTEN_ADDRESS" ] && exec nvim "$@"
 
 help-and-exit() {
 cat >&2 <<EOF
@@ -19,7 +20,6 @@ case "$1" in
 esac
 }
 
-remote-vim() {
 files=()
 mode=""
 
@@ -50,10 +50,3 @@ vimf=$(dirname "$(readlink -f "$0")")/remote_funcs.vim
 env -u NVIM_LISTEN_ADDRESS nvim --headless -u NONE -i NONE \
     -c "source $vimf" -c "RemoteStart $NVIM_LISTEN_ADDRESS" \
     -c "RemoteVim $mode $a" -c "quit"
-}
-
-if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
-    remote-vim "$@"
-else
-    nvim "$@"
-fi
