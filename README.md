@@ -1,8 +1,11 @@
 # User-facing scripts
 
-editerm: tabbed + st + neovim + terminal in GUI, abduco + neovim + terminal in CLI.
-  The use of abduco is transparent. You don't need to worry about sessions. Just
-  run editerm and it will open an existing session if available or start a new one.
+editerm: abduco + neovim + terminal (mainly intended for use via SSH)
+  The use of abduco to preserve the terminal across SSH sessions is
+  transparent. You don't need to worry about sessions. Just run editerm and it
+  will open an existing session if available or start a new one.
+
+editerm-gui: tabbed + st + neovim + terminal in GUI
 
 gvim: st + neovim
 
@@ -16,7 +19,7 @@ man: If called from a neovim terminal, open man page with neovim's :Man. Else, c
 - neovim: https://github.com/neovim/neovim
 - st: git://git.suckless.org/st
 - tabbed: git://git.suckless.org/tabbed
-- abduco: http://www.brain-dump.org/projects/abduco
+- abduco: http://www.brain-dump.org/projects/abduco (Source at: https://github.com/martanne/abduco)
 - xsel: http://www.vergenet.net/~conrad/software/xsel/download/xsel-1.2.0.tar.gz (or get binary)
 
 # Shortcuts
@@ -56,3 +59,24 @@ man only supports `man <page>` or `man <number> <page>`. vim only supports whate
 
 I encountered an issue with fish 2.4. If vi binding is enabled, it outputs strange codes
 that break vim's :Man. Sticking to 2.3.1 for now.
+
+# Who needs what in its PATH
+
+shell inside editerm:
+    vim, man (hence nvim, bash)
+
+nvim itself:
+    original man (if man wrapper is in PATH, you'll have an infinite recursion
+    as nvim's :Man calls man)
+
+ssh session:
+    editerm (hence abduco, nvim, fish)
+
+desktop session:
+    editerm-gui (hence tabbed, st, nvim, fish)
+
+terminal: (e.g. gnome-terminal, iTerm)
+    nvim -c term (hence nvim, fish)
+
+tabbed running editerm-gui:
+    st (for spawning new tab)

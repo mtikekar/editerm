@@ -1,0 +1,9 @@
+
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=editerm
+Type=Application
+Terminal=false
+Exec=/home/mtikekar/src/editerm/bin/editerm-gui
+Icon=terminal
