@@ -21,13 +21,6 @@ function! s:RemoteVim(mode, ...)
 
     call rpcrequest(s:conn, 'nvim_set_current_dir', getcwd())
 
-    " Preserve the terminal tab if it would've been taken over
-    " by one of the new files being opened
-    if len(files) > 1 || a:mode == 'edit'
-        call rpcrequest(s:conn, 'nvim_command', '-tabedit ' . files[0])
-        unlet files[0]
-    endif
-
     for f in files
         call rpcrequest(s:conn, 'nvim_command', mode . ' ' . f)
     endfor
