@@ -3,6 +3,12 @@
 
 vimf=$(dirname "$(readlink -f "$0")")/remote_funcs.vim
 
+cmd="RemoteMan 0 $@"
+if [ "$1" = -O ]; then
+    shift
+    cmd="RemoteMan 1 $@"
+fi
+
 env -u NVIM_LISTEN_ADDRESS nvim --headless -u NONE -i NONE \
     -c "source $vimf" -c "RemoteStart $NVIM_LISTEN_ADDRESS" \
-    -c "RemoteMan $@" -c "quit"
+    -c "$cmd" -c "quit"

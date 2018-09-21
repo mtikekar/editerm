@@ -7,11 +7,12 @@ function! s:RemoteStart(socket)
     let s:conn = sockconnect(mode, a:socket, {'rpc': v:true})
 endfunction
 
-function! s:RemoteMan(...)
+function! s:RemoteMan(vert, ...)
     if exists('$MANPATH')
         call rpcrequest(s:conn, 'nvim_command', "let $MANPATH = '" . $MANPATH . "'")
     endif
-    call rpcrequest(s:conn, 'nvim_command', 'Man ' . join(a:000, ' '))
+    let cmd = a:vert == '1'? 'vert Man ': 'Man '
+    call rpcrequest(s:conn, 'nvim_command', cmd . join(a:000, ' '))
 endfunction
 
 function! s:RemoteVim(mode, ...)
