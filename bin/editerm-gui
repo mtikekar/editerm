@@ -4,4 +4,4 @@ d="$(readlink -e "$0")"
 d="$(dirname "$d")"
 
 exec &> /dev/null
-exec $d/tabbed -d -r 2 $d/st -w winid -e nvim -c terminal "$@" &
+exec $d/tabbed -d -r 2 $d/st -w winid -e nvim -c "terminal $@" &
