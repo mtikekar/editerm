@@ -8,9 +8,6 @@ function! s:RemoteStart(socket)
 endfunction
 
 function! s:RemoteMan(vert, ...)
-    if exists('$MANPATH')
-        call rpcrequest(s:conn, 'nvim_command', "let $MANPATH = '" . $MANPATH . "'")
-    endif
     let cmd = a:vert == '1'? 'vert Man ': 'Man '
     call rpcrequest(s:conn, 'nvim_command', cmd . join(a:000, ' '))
 endfunction

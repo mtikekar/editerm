@@ -3,11 +3,16 @@
 
 vimf=$(dirname "$(readlink -f "$0")")/remote_funcs.vim
 
-cmd="RemoteMan 0 $@"
+vert=0
 if [ "$1" = -O ]; then
     shift
-    cmd="RemoteMan 1 $@"
+    vert=1
 fi
+
+manpage=$(/usr/bin/man -w "$@")
+[ -n "$manpage" ] || exit
+cmd="RemoteMan $vert $manpage"
+echo "Opening $manpage"
 
 env -u NVIM_LISTEN_ADDRESS nvim --headless -u NONE -i NONE \
     -c "source $vimf" -c "RemoteStart $NVIM_LISTEN_ADDRESS" \
