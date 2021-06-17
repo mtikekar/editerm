@@ -43,10 +43,9 @@ done
 
 [ -z "$mode" ] && mode=edit
 
-a=$(printf '%q ' "${files[@]}")
+args=$(printf '"%s", ' "$NVIM_LISTEN_ADDRESS" $mode "${files[@]}")
 
 vimf=$(dirname "$(readlink -f "$0")")/remote_funcs.vim
 
-env -u NVIM_LISTEN_ADDRESS nvim --headless -u NONE -i NONE \
-    -c "source $vimf" -c "RemoteStart $NVIM_LISTEN_ADDRESS" \
-    -c "RemoteVim $mode $a" -c "quit"
+env -u NVIM_LISTEN_ADDRESS nvim --headless -u NONE -i NONE -c "source $vimf" \
+    -c "call RemoteVim($args)"
